@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-CODE PYTHON MONOLITHIQUE POUR GOOGLE COLAB AVEC GRADIO
-Analyse de Robustesse (Pièces Euro) - VERSION AMÉLIORÉE
-Auteur: hamzaG-max
-Date: 2025-10-15 09:59:34 UTC
-"""
-
-# Installation des dépendances (décommenter si nécessaire)
+# Installation des dépendances 
 # !pip install -q opencv-python numpy matplotlib scipy gradio scikit-image
 
 import cv2
@@ -24,7 +16,7 @@ import time
 import datetime
 
 # --- CONSTANTES GLOBALES ---
-AUTHOR = "hamzaG-max"  # Identifiant de l'auteur
+AUTHOR = "Hamza Guemmi"  # Identifiant de l'auteur
 FAIL_THRESHOLD_EUROS = 0.02  # Seuil de défaillance : erreur de diagnostic >= 2 centimes d'euro.
 
 # Ratios basés sur le diamètre de 2€ (25.75mm)
@@ -435,7 +427,7 @@ def encode_img_b64(img_bgr):
         return base64.b64encode(img_b64_arr.tobytes()).decode('utf-8')
     return ""
 
-# --- PROBLÈME 2 : BRUIT SEL ET POIVRE (Analyse Détaillée et Filtres) ---
+# --- PROBLÈME 2 : BRUIT SEL ET POIVRE  ---
 
 def apply_filters_and_report(img_bgr, orig_value, method_func):
     """ Applique des filtres et trouve le meilleur réparateur. """
@@ -706,10 +698,6 @@ def compress_decompress_dct(image_bgr, Q_factor):
     return decompressed_bgr, TC, orig_entropy, entropy_coeff
 
 def generate_method_report_compression(study_res, image_name, orig_value, method_name, detect_func):
-    """
-    Génère le rapport HTML détaillé (graphe, tableau, image) pour une seule méthode de compression.
-    CORRECTION : Gestion des valeurs None pour l'affichage des seuils de défaillance.
-    """
 
     Q_factors = [res['Q_factor'] for res in study_res['results']]
     PSNR_values = [res['PSNR'] for res in study_res['results']]
@@ -719,7 +707,6 @@ def generate_method_report_compression(study_res, image_name, orig_value, method
     fail_PSNR = study_res['fail_PSNR']
     fail_TC = study_res['fail_TC']
 
-    # --- CORRECTION DE LA GESTION DES VALEURS NONE ---
     fail_Q_str = f"{fail_Q_factor:.2f}" if fail_Q_factor is not None else "N/A"
     fail_TC_str = f"{fail_TC:.2f}" if fail_TC is not None else "N/A"
     fail_PSNR_str = f"{fail_PSNR:.2f} dB" if fail_PSNR is not None else "N/A"
@@ -745,7 +732,6 @@ def generate_method_report_compression(study_res, image_name, orig_value, method
     diag_fail = ""
     if study_res['fail_img_bgr'] is not None:
          img_fail_b64 = encode_img_b64(study_res['fail_img_bgr'])
-         # Utilisation des variables string pour l'affichage
          diag_fail = f"""
          <h4>Image à la Défaillance (Q={fail_Q_str}, TC={fail_TC_str})</h4>
          <img src="data:image/png;base64,{img_fail_b64}" alt="Image compressée à la défaillance" style="max-width:400px; display: block; margin: 10px auto;">
@@ -907,11 +893,11 @@ def study_compression(original_image_data, original_results_list_fixed, original
 
     return "Étude de la compression terminée. Comparaison des deux méthodes effectuée.", "".join(results_html), fail_PSNR_calibrated_final, fail_TC_calibrated_final, all_study_data
 
-# --- NOUVEAU : PROBLÈME 3 AMÉLIORÉ - COMPRESSION DCT AVEC TRAITEMENT ANTI-ARTIFACTS ---
+# --- PROBLÈME 3 COMPRESSION DCT AVEC TRAITEMENT ANTI-ARTIFACTS ---
 
 def study_compression_enhanced(original_image_data, original_results_list_fixed, original_results_list_calibrated, standard_study_data=None):
     """
-    Réalise l'étude complète de la compression DCT avec amélioration.
+    Réalise l'étude complète de la compression DCT AVEC TRAITEMENT ANTI-ARTIFACTS.
     Réutilise les données du problème 3 standard pour garantir la cohérence des résultats.
     """
     if not original_image_data or not original_results_list_fixed or not original_results_list_calibrated:
@@ -1002,7 +988,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
 
         # --- 2. Tableau de comparaison des seuils ---
 
-        # Extract failure metrics for all methods
+        
         methods_data = {
             "Contraintes Fixes": {
                 "standard": {
@@ -1030,7 +1016,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             }
         }
 
-        # Generate comparison HTML table
+        
         comparison_html = f"""
         <h4>Synthèse des Seuils de Défaillance (Compression DCT) - Standard vs Amélioré</h4>
         <table style='width:100%'>
@@ -1044,9 +1030,9 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             </tr>
         """
 
-        # Add rows for each method and variant
+        
         for method_name, method_data in methods_data.items():
-            # Standard row
+            
             std_Q = method_data["standard"]["Q"]
             std_TC = method_data["standard"]["TC"]
             std_PSNR = method_data["standard"]["PSNR"]
@@ -1055,7 +1041,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             enh_TC = method_data["enhanced"]["TC"]
             enh_PSNR = method_data["enhanced"]["PSNR"]
 
-            # Calculate improvement percentages
+            
             q_improvement = "-"
             tc_improvement = "-"
             if std_Q is not None and enh_Q is not None:
@@ -1064,7 +1050,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             if std_TC is not None and enh_TC is not None:
                 tc_improvement = f"+{((enh_TC / std_TC) - 1) * 100:.1f}%"
 
-            # Format strings for display
+            
             std_Q_str = f"{std_Q:.2f}" if std_Q is not None else "N/A"
             std_TC_str = f"{std_TC:.2f}" if std_TC is not None else "N/A"
             std_PSNR_str = f"{std_PSNR:.2f} dB" if std_PSNR is not None else "N/A"
@@ -1073,7 +1059,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             enh_TC_str = f"{enh_TC:.2f}" if enh_TC is not None else "N/A"
             enh_PSNR_str = f"{enh_PSNR:.2f} dB" if enh_PSNR is not None else "N/A"
 
-            # Add standard row
+            
             comparison_html += f"""
             <tr>
                 <td rowspan="2">{method_name}</td>
@@ -1085,7 +1071,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             </tr>
             """
 
-            # Add enhanced row with potential improvement highlight
+           
             comparison_html += f"""
             <tr>
                 <td>Amélioré</td>
@@ -1119,7 +1105,7 @@ def study_compression_enhanced(original_image_data, original_results_list_fixed,
             </div>
         """)
 
-    # Return best results from enhanced calibrated method
+    
     fail_PSNR_calibrated_final = enhanced_study_data['calibrated_enhanced']['fail_PSNR']
     fail_TC_calibrated_final = enhanced_study_data['calibrated_enhanced']['fail_TC']
 
@@ -1261,7 +1247,7 @@ def process_prob3_enhanced(state):
 
 # --- INTERFACE GRADIO ---
 
-with gr.Blocks(title="Analyse de Robustesse Image (Pièces Euro)") as demo:
+with gr.Blocks(title="EuroCount") as demo:
 
     # gr.State initialisé pour stocker les résultats des deux méthodes et données d'étude
     state = gr.State({
@@ -1350,9 +1336,9 @@ with gr.Blocks(title="Analyse de Robustesse Image (Pièces Euro)") as demo:
         )
 
     # ----------------------------------------------------
-    # SECTION 5: Problème 3 AMÉLIORÉ (Compression DCT avec anti-artifacts)
+    # SECTION 5: Problème 3 Compression DCT avec anti-artifacts
     # ----------------------------------------------------
-    with gr.Tab("5. Problème 3 Amélioré: Compression DCT avec Anti-Artifacts"):
+    with gr.Tab("5. Problème 3 Compression DCT avec Anti-Artifacts"):
         gr.Markdown("## 5. Étude de la Compression avec Traitement Anti-Artifacts DCT")
         gr.HTML("""
             <div style="background-color: #e6f7ff; border-left: 4px solid #1890ff; padding: 10px; margin-bottom: 20px;">
