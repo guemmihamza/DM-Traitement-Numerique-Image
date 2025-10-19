@@ -1259,7 +1259,8 @@ with gr.Blocks(title="EuroCount") as demo:
     })
 
     gr.Markdown("DM-Traitement Numerique d'Image")
-    gr.HTML(f"""
+    gr.HTML(f"""<h2>Le temps d'execution peut prendre quelques minutes pour une image----Alors pour 7 images Café obligatoire ☕🖤.</h2>
+    <h3>Vous pouvez exécuter la section 4 avant que la section 3 ne soit terminée ! (Valable uniquement pour ces 2 sections)</h3>
        Auteur: <strong>{AUTHOR}</strong> </strong></p>
     """)
 
@@ -1281,7 +1282,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 2: Problème 1 (Comptage de Base)
     # ----------------------------------------------------
-    with gr.Tab("2. Problème 1 : Comptage de Base (Comparaison des Méthodes)"):
+    with gr.Tab("2. Problème 1 : Comptage de Base "):
         gr.Markdown("## 2. Exécution du Comptage (Fixe vs. Calibrée)")
         prob1_btn = gr.Button("Exécuter le Comptage de Base pour les Deux Méthodes")
         prob1_status = gr.Textbox(label="Statut de l'Exécution", lines=1)
@@ -1296,7 +1297,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 3: Problème 2 (Bruit Sel et Poivre)
     # ----------------------------------------------------
-    with gr.Tab("3. Problème 2 : Bruit Sel et Poivre (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café)"):
+    with gr.Tab("3. Problème 2 : Bruit Sel et Poivre "):
         gr.Markdown("## 3. Étude du Bruit Impulsionnel (Comparaison de Robustesse, Filtres et Images Clés)")
         prob2_btn = gr.Button("Lancer l'Analyse Détaillée du Bruit (d et Q)")
         prob2_status = gr.Textbox(label="Statut de l'Analyse", lines=1)
@@ -1316,7 +1317,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 4: Problème 3 (Compression DCT)
     # ----------------------------------------------------
-    with gr.Tab("4. Problème 3 : Compression DCT (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café)"):
+    with gr.Tab("4. Problème 3 : Compression DCT "):
         gr.Markdown("## 4. Étude de la Compression (Comparaison de Robustesse Détaillée, Tableaux et Graphes)")
         prob3_btn = gr.Button("Lancer l'Analyse Détaillée de la Compression (TC et PSNR)")
         prob3_status = gr.Textbox(label="Statut de l'Analyse", lines=1)
@@ -1336,7 +1337,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 5: Problème 3 Compression DCT avec anti-artifacts
     # ----------------------------------------------------
-    with gr.Tab("5. Problème 3 Compression DCT avec Anti-Artifacts (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café)"):
+    with gr.Tab("5. Problème 3 Compression DCT avec Anti-Artifacts "):
         gr.Markdown("## 5. Étude de la Compression avec Traitement Anti-Artifacts DCT")
         gr.HTML("""
             <div style="background-color: #e6f7ff; border-left: 4px solid #1890ff; padding: 10px; margin-bottom: 20px;">
