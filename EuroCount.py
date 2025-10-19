@@ -1296,7 +1296,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 3: Problème 2 (Bruit Sel et Poivre)
     # ----------------------------------------------------
-    with gr.Tab("3. Problème 2 : Bruit Sel et Poivre (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café"):
+    with gr.Tab("3. Problème 2 : Bruit Sel et Poivre (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café)"):
         gr.Markdown("## 3. Étude du Bruit Impulsionnel (Comparaison de Robustesse, Filtres et Images Clés)")
         prob2_btn = gr.Button("Lancer l'Analyse Détaillée du Bruit (d et Q)")
         prob2_status = gr.Textbox(label="Statut de l'Analyse", lines=1)
@@ -1316,7 +1316,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 4: Problème 3 (Compression DCT)
     # ----------------------------------------------------
-    with gr.Tab("4. Problème 3 : Compression DCT (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café")"):
+    with gr.Tab("4. Problème 3 : Compression DCT (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café)"):
         gr.Markdown("## 4. Étude de la Compression (Comparaison de Robustesse Détaillée, Tableaux et Graphes)")
         prob3_btn = gr.Button("Lancer l'Analyse Détaillée de la Compression (TC et PSNR)")
         prob3_status = gr.Textbox(label="Statut de l'Analyse", lines=1)
@@ -1336,7 +1336,7 @@ with gr.Blocks(title="EuroCount") as demo:
     # ----------------------------------------------------
     # SECTION 5: Problème 3 Compression DCT avec anti-artifacts
     # ----------------------------------------------------
-    with gr.Tab("5. Problème 3 Compression DCT avec Anti-Artifacts (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café")"):
+    with gr.Tab("5. Problème 3 Compression DCT avec Anti-Artifacts (Le temps d'execution peut prendre quelques minutes pour une image----Pour 7 images, Prenez-donc un café)"):
         gr.Markdown("## 5. Étude de la Compression avec Traitement Anti-Artifacts DCT")
         gr.HTML("""
             <div style="background-color: #e6f7ff; border-left: 4px solid #1890ff; padding: 10px; margin-bottom: 20px;">
@@ -1371,4 +1371,5 @@ with gr.Blocks(title="EuroCount") as demo:
 
 if __name__ == "__main__":
     demo.launch(debug=True)
+
 
